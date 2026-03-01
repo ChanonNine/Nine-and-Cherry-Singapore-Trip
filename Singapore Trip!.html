@@ -134,7 +134,7 @@
             font-weight: 400;
         }
 
-        /* Full Itinerary Modal Styles */
+        /* Modal Styles */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -193,7 +193,7 @@
         
         <div class="sticker-wrapper">
             <div class="dates" id="openItinerary">🗓️ 4 - 6 April 2026</div>
-            <img src="Nine and Cherry Sticker.jpg" alt="Nine and Cherry in a Plane">
+            <img src="https://drive.google.com/uc?export=view&id=1a2bqHiFJsEO1-eJp8AK-jXRBqtNb932f" alt="Nine and Cherry in a Plane">
         </div>
 
         <div class="countdown" id="countdown">
@@ -211,19 +211,19 @@
             <h2 style="color: #ff758c; text-align: center; margin-top: 10px;">Our Singapore Adventure 🇸🇬</h2>
             
             <div class="day-header">Day 1: Saturday, April 4</div>
-            <div class="agenda-item"><div class="agenda-time">Morning</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Flight from Suvarnabhumi Airport</a></div></div>
-            <div class="agenda-item"><div class="agenda-time">15:00</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Check-in at The Clan Hotel</a></div></div>
-            <div class="agenda-item"><div class="agenda-time">15:30</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Buddha Tooth Relic Temple</a></div></div>
-            <div class="agenda-item"><div class="agenda-time">18:00</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Dinner at Fook Kin</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">Morning</div><div class="agenda-details"><a href="https://www.google.com/maps/search/Suvarnabhumi+Airport" target="_blank">Flight from Suvarnabhumi Airport</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">15:00</div><div class="agenda-details"><a href="https://www.google.com/maps/search/The+Clan+Hotel+Singapore" target="_blank">Check-in at The Clan Hotel</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">15:30</div><div class="agenda-details"><a href="https://www.google.com/maps/search/Buddha+Tooth+Relic+Temple" target="_blank">Buddha Tooth Relic Temple</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">18:00</div><div class="agenda-details"><a href="https://www.google.com/maps/search/Fook+Kin+Singapore" target="_blank">Dinner at Fook Kin</a></div></div>
 
             <div class="day-header">Day 2: Sunday, April 5</div>
-            <div class="agenda-item"><div class="agenda-time">09:30</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">National Gallery Singapore</a></div></div>
-            <div class="agenda-item"><div class="agenda-time">14:30</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">The Merlion Park</a></div></div>
-            <div class="agenda-item"><div class="agenda-time">21:00</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Gardens by the Bay Lights</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">09:30</div><div class="agenda-details"><a href="https://www.google.com/maps/search/National+Gallery+Singapore" target="_blank">National Gallery Singapore</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">14:30</div><div class="agenda-details"><a href="https://www.google.com/maps/search/Merlion+Park" target="_blank">The Merlion Park</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">21:00</div><div class="agenda-details"><a href="https://www.google.com/maps/search/Gardens+by+the+Bay+Light+Show" target="_blank">Gardens by the Bay Lights</a></div></div>
 
             <div class="day-header">Day 3: Monday, April 6</div>
-            <div class="agenda-item"><div class="agenda-time">08:30</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Breakfast at Dough (CHIJMES)</a></div></div>
-            <div class="agenda-item"><div class="agenda-time">Morning</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Fort Canning Tree Tunnel</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">08:30</div><div class="agenda-details"><a href="https://www.google.com/maps/search/Dough+CHIJMES" target="_blank">Breakfast at Dough (CHIJMES)</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">Morning</div><div class="agenda-details"><a href="https://www.google.com/maps/search/Fort+Canning+Tree+Tunnel" target="_blank">Fort Canning Tree Tunnel</a></div></div>
             
             <p style="text-align:center; margin-top:25px;">
                 <a href="https://docs.google.com/spreadsheets/d/18YyM-YDE5pLkDvXLy6z8LVXt52qDHWdOrMFrXPE6Q94/edit#gid=0" target="_blank" style="color: #6a82fb; font-weight: 600;">Open Full Planner Sheet 🔗</a>
@@ -246,11 +246,18 @@
         setInterval(function() {
             const now = new Date().getTime();
             const distance = targetDate - now;
+            
+            // Safety check for past dates
+            if (distance < 0) {
+                document.getElementById("countdown").style.display = "none";
+                document.getElementById("message").style.display = "block";
+                return;
+            }
+
             document.getElementById("days").innerText = Math.floor(distance / 86400000).toString().padStart(2, '0');
             document.getElementById("hours").innerText = Math.floor((distance % 86400000) / 3600000).toString().padStart(2, '0');
             document.getElementById("minutes").innerText = Math.floor((distance % 3600000) / 60000).toString().padStart(2, '0');
             document.getElementById("seconds").innerText = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
-            if (distance < 0) { document.getElementById("countdown").style.display = "none"; document.getElementById("message").style.display = "block"; }
         }, 1000);
     </script>
 </body>
