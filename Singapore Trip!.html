@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nine and Cherry trip to Singapore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            font-family: 'Fredoka', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Floating background clouds */
+        .cloud {
+            position: absolute;
+            font-size: 100px;
+            color: white;
+            opacity: 0.8;
+            animation: moveClouds 20s linear infinite;
+            z-index: 1;
+        }
+        .cloud1 { top: 10%; left: -20%; animation-duration: 25s; font-size: 120px; }
+        .cloud2 { top: 30%; left: -20%; animation-duration: 18s; animation-delay: 5s; }
+        .cloud3 { top: 60%; left: -20%; animation-duration: 30s; animation-delay: 2s; font-size: 150px; }
+
+        @keyframes moveClouds {
+            0% { transform: translateX(-10vw); }
+            100% { transform: translateX(120vw); }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 50px;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            max-width: 90%;
+            border: 4px solid white;
+        }
+
+        h1 {
+            color: #ff758c;
+            font-size: 2.2rem;
+            margin-bottom: 35px;
+            text-shadow: 2px 2px 4px rgba(255, 117, 140, 0.1);
+        }
+
+        /* Sticker Wrapper for positioning the date ON TOP */
+        .sticker-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 25px;
+            animation: float 3s ease-in-out infinite alternate;
+        }
+
+        .sticker-wrapper img {
+            width: 250px;
+            height: auto;
+            border-radius: 25px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+            display: block;
+        }
+
+        /* Date bubble positioned on top of the sticker */
+        .dates {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            color: #6a82fb;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(106, 130, 251, 0.2);
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            z-index: 20;
+            border: 2px solid #f0f4ff;
+        }
+
+        .dates:hover {
+            transform: translateX(-50%) scale(1.1);
+            color: #ff758c;
+            background: #fffafa;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(-10px) rotate(-2deg); }
+            100% { transform: translateY(10px) rotate(2deg); }
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 20px;
+            min-width: 75px;
+            box-shadow: 0 8px 15px rgba(255, 117, 140, 0.2);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .time-box .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        /* Full Itinerary Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .itinerary-modal {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            max-height: 85vh;
+            border-radius: 35px;
+            padding: 30px;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            position: relative;
+            text-align: left;
+        }
+
+        .day-header {
+            background: #f0f4ff;
+            color: #6a82fb;
+            padding: 8px 18px;
+            border-radius: 15px;
+            font-weight: 600;
+            margin: 20px 0 12px 0;
+            display: inline-block;
+        }
+
+        .agenda-item { display: flex; margin-bottom: 12px; font-size: 0.95rem; line-height: 1.4; }
+        .agenda-time { min-width: 65px; font-weight: 600; color: #ff758c; }
+        .agenda-details a { color: #555; text-decoration: none; border-bottom: 1px dotted #ccc; transition: all 0.2s; }
+        .agenda-details a:hover { color: #6a82fb; border-bottom: 1px solid #6a82fb; }
+
+        .close-btn { position: absolute; top: 25px; right: 25px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #ccc; }
+
+        #message { display: none; font-size: 1.8rem; color: #ff758c; font-weight: 600; margin-top: 20px; animation: pulse 1.5s infinite alternate; }
+    </style>
+</head>
+<body>
+
+    <div class="cloud cloud1">☁️</div>
+    <div class="cloud cloud2">☁️</div>
+    <div class="cloud cloud3">☁️</div>
+
+    <div class="container">
+        <h1>Nine and Cherry trip to Singapore</h1>
+        
+        <div class="sticker-wrapper">
+            <div class="dates" id="openItinerary">🗓️ 4 - 6 April 2026</div>
+            <img src="Nine and Cherry Sticker.jpg" alt="Nine and Cherry in a Plane">
+        </div>
+
+        <div class="countdown" id="countdown">
+            <div class="time-box"><span id="days">00</span><div class="label">Days</div></div>
+            <div class="time-box"><span id="hours">00</span><div class="label">Hours</div></div>
+            <div class="time-box"><span id="minutes">00</span><div class="label">Mins</div></div>
+            <div class="time-box"><span id="seconds">00</span><div class="label">Secs</div></div>
+        </div>
+        <div id="message">Have an amazing trip! 🇸🇬💖</div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="itinerary-modal">
+            <button class="close-btn" id="closeItinerary">✕</button>
+            <h2 style="color: #ff758c; text-align: center; margin-top: 10px;">Our Singapore Adventure 🇸🇬</h2>
+            
+            <div class="day-header">Day 1: Saturday, April 4</div>
+            <div class="agenda-item"><div class="agenda-time">Morning</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Flight from Suvarnabhumi Airport</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">15:00</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Check-in at The Clan Hotel</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">15:30</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Buddha Tooth Relic Temple</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">18:00</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Dinner at Fook Kin</a></div></div>
+
+            <div class="day-header">Day 2: Sunday, April 5</div>
+            <div class="agenda-item"><div class="agenda-time">09:30</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">National Gallery Singapore</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">14:30</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">The Merlion Park</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">21:00</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Gardens by the Bay Lights</a></div></div>
+
+            <div class="day-header">Day 3: Monday, April 6</div>
+            <div class="agenda-item"><div class="agenda-time">08:30</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Breakfast at Dough (CHIJMES)</a></div></div>
+            <div class="agenda-item"><div class="agenda-time">Morning</div><div class="agenda-details"><a href="https://maps.app.goo.gl/uXf3S" target="_blank">Fort Canning Tree Tunnel</a></div></div>
+            
+            <p style="text-align:center; margin-top:25px;">
+                <a href="https://docs.google.com/spreadsheets/d/18YyM-YDE5pLkDvXLy6z8LVXt52qDHWdOrMFrXPE6Q94/edit#gid=0" target="_blank" style="color: #6a82fb; font-weight: 600;">Open Full Planner Sheet 🔗</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Modal logic
+        const openBtn = document.getElementById('openItinerary');
+        const closeBtn = document.getElementById('closeItinerary');
+        const modal = document.getElementById('modalOverlay');
+
+        openBtn.onclick = () => modal.style.display = 'flex';
+        closeBtn.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; }
+
+        // Countdown Logic
+        const targetDate = new Date("April 4, 2026 00:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            document.getElementById("days").innerText = Math.floor(distance / 86400000).toString().padStart(2, '0');
+            document.getElementById("hours").innerText = Math.floor((distance % 86400000) / 3600000).toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = Math.floor((distance % 3600000) / 60000).toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
+            if (distance < 0) { document.getElementById("countdown").style.display = "none"; document.getElementById("message").style.display = "block"; }
+        }, 1000);
+    </script>
+</body>
+</html>
